@@ -1,54 +1,33 @@
 require 'matrix'
 require 'pry'
 binding.pry
-class Map
-  attr_reader :grid, :position, :housecount
-  def initialize
-    @grid = [[1]]
-    @position = [0,0]
-    @housecount = 1
-  end
 
-  def move(dir)
-    case dir
-    when ?v
-      @position[0] += 1
-      if @position[0] == @grid.length
-        temp = Matrix[*@grid]
-        temp = Matrix.vstack(temp, Matrix.row_vector(Array.new(@grid[0].length) { 0 } ))
-        @grid = temp.to_a
-      end
-    when ?^
-      @position[0] -= 1
-      if @position[0] < 0
-        temp = Matrix[*@grid]
-        temp = Matrix.vstack(Matrix.row_vector(Array.new(@grid[0].length) { 0 }), temp)
-        @grid = temp.to_a
-        @position[0] = 0
-      end
-    when ?>
-      @position[1] += 1
-      if @position[1] == @grid[@position[0]].length
-        temp = Matrix[*@grid]
-        temp = Matrix.hstack(temp, Matrix.column_vector(Array.new(@grid.length) { 0 } ))
-        @grid = temp.to_a
-      end
-    when ?<
-      @position[1] -= 1
-      if @position[1] < 0
-        temp = Matrix[*@grid]
-        temp = Matrix.hstack(Matrix.column_vector(Array.new(@grid.length) { 0 } ))
-        @grid = temp.to_a
-        @position[1] = 0
-      end
-    end
-    @housecount += 1 if @grid[@position[0]][@position[1]] == 0
-    @grid[@position[0]][@position[1]] += 1
-  end
-end
-
-santa = Map.new
 instructions = File.readlines('./input', :chomp=> true)[0]
-instructions.each_char { |i| santa.move(i) }
+up_count = instructions.count(?^)
+down_count = instructions.count(?v)
+left_count = instructions.count(?<)
+right_count = instructions.count(?>)
 
-return santa.housecount
+grid = Array.new(up_count + down_count) { Array.new(left_count + right_count) { 0 } }
+x = left_count
+y = up_count
+grid[y][x] = 1
+housecount = 1
+
+instructions.each_char do |i|
+  case i
+  when ?>
+    x += 1
+  when ?<
+    x -= 1
+  when ?v
+    y += 1
+  when ?^
+    y -= 1
+  end
+  if grid[y][x] == 0
+    housecount += 1
+  end
+  grid[y][x] += 1
+end
+puts housecount
