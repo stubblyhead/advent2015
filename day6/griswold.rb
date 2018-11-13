@@ -4,25 +4,28 @@ binding.pry
 
 class Light
   attr_reader :bulb
-
   def initialize
-    @bulb = false
+    @bulb = 0
   end
 
   def turn_on
-    @bulb = true
+    @bulb += 1
   end
 
   def turn_off
-    @bulb = false
+    [0,@bulb-1].max
   end
 
   def toggle
-    @bulb = !@bulb
+    @bulb += 2
   end
 
   def ==(other)
     @bulb == other
+  end
+
+  def to_i
+    @bulb.to_i
   end
 end
 
