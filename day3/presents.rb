@@ -1,6 +1,5 @@
-require 'matrix'
 require 'pry'
-binding.pry
+#binding.pry
 
 instructions = File.readlines('./input', :chomp=> true)[0]
 up_count = instructions.count(?^)
