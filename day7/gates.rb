@@ -1,9 +1,12 @@
+# require 'pry'
+# binding.pry
+
 def bobby_and(x,y)
   x & y
 end
 
 def bobby_or(x,y)
-  x ^ y
+  x | y
 end
 
 def bobby_lshift(x,y)
@@ -18,5 +21,6 @@ def bobby_not(x)
   65535 - x
 end
 
-
 gates = {}
+
+instructions = File.readlines('./input', :chomp => true)
