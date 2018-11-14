@@ -1,4 +1,4 @@
-words = File.readlines('./testcase', :chomp => true)
+words = File.readlines('./input', :chomp => true)
 codelength = 0
 charlength = 0
 
