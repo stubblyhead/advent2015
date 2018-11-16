@@ -1,6 +1,3 @@
-require 'pry'
-binding.pry
-
 def lookandsay(str)
   num_ary = str.chars
   outstr = ''
@@ -18,4 +15,9 @@ def lookandsay(str)
   outstr
 end
 
-puts lookandsay('21')
+mystr = '1113222113'
+
+40.times { mystr = lookandsay(mystr) }
+
+
+puts mystr.length
