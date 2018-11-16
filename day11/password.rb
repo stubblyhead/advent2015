@@ -3,7 +3,7 @@ def valid?(str)
   match = str.match(/(\w)\1/)
   if match
     double = str.index(match[0]) #find where double letter starts
-    temp = str[0,double] + str[double+2..-1] #get candidate without the double letter
+    temp = str.sub(match[0], '--') #replace double letter with non-alphanumeric chars
     return false unless !temp.match(match[0]) and temp.match(/(\w)\1/) #bail early unless
     #candidate doesn't contain the first double letter and does contain a different double letter
   else
@@ -15,3 +15,12 @@ def valid?(str)
     return false
   end
 end
+
+password = 'vzbxkghb'
+valid = false
+until valid
+  password.succ!
+  valid = valid?(password)
+end
+
+puts password
