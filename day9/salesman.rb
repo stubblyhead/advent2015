@@ -1,7 +1,7 @@
 # require 'pry'
 # binding.pry
 
-lines = File.readlines('./testcase', :chomp => true)
+lines = File.readlines('./input', :chomp => true)
 distances = lines.length
 city_hash = {}
 city_count = 0
@@ -30,7 +30,7 @@ shortest = Float::INFINITY
 city_hash.keys.permutation.each do |perm|
   this_distance = 0
   (0..perm.length-2).each do |i|
-    this_distance += distances[city_hash[perm[i]]][city_hash[perm[i+1]]]
+    this_distance += city_distance[city_hash[perm[i]]][city_hash[perm[i+1]]]
   end
   shortest = [shortest, this_distance].min
 end
