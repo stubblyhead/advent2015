@@ -24,3 +24,11 @@ until valid
 end
 
 puts password
+
+valid = false
+until valid
+  password.succ!
+  valid = valid?(password)
+end
+
+puts password
