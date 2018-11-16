@@ -27,12 +27,14 @@ lines.each do |i|
 end
 
 shortest = Float::INFINITY
+longest = 0
 city_hash.keys.permutation.each do |perm|
   this_distance = 0
   (0..perm.length-2).each do |i|
     this_distance += city_distance[city_hash[perm[i]]][city_hash[perm[i+1]]]
   end
   shortest = [shortest, this_distance].min
+  longest = [longest, this_distance].max
 end
 
-puts shortest
+puts "shortest = #{shortest}", "longest = #{longest}"
