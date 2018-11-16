@@ -16,5 +16,24 @@ end
 
 sum = 0
 jsonary.each { |i| sum+= i.to_i } #any string converted to int is 0 so we don't really need to do any type checking
+puts "part 1 #{sum}"
 
-puts sum
+jsonary = JSON.parse(str).to_a.flatten
+while jsonary.any? { |i| i.class == Hash }
+  jsonary.map! do |i|
+    if i.class == Hash
+      if i.values.index('red')  #same as last time with the add'l step of voiding out any hash with red as a value'
+        i = 0
+        next
+      end
+      i = i.to_a
+    else
+      i = i
+    end
+  end
+  jsonary.flatten!
+end
+
+sum = 0
+jsonary.each { |i| sum += i.to_i }
+puts "part 2 #{sum}"
