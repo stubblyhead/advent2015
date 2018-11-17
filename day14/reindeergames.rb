@@ -15,3 +15,17 @@ class Reindeer
   end
 
 end
+field = {}
+lines = File.readlines('./input', :chomp => true)
+lines.each do |i|
+  match = i.match(/^(\w+).* (\d+).* (\d+).* (\d+)/)
+  name, speed, run, rest = match[1,4]
+  field[name] = Reindeer.new(speed.to_i, run.to_i, rest.to_i)
+end
+
+field.each_value { |i| i.run(2503) }
+
+results = field.values
+results.map! { |i| i = i.distance }
+
+puts results.max
