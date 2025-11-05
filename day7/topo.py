@@ -1,0 +1,49 @@
+if __name__ == '__main__':
+    with open('testcase') as f:
+        instructions = f.readlines()
+        graph = {}
+        adj_list = []
+        for i in instructions:
+            l,r = i.strip().split(' -> ')
+            if l.isnumeric():
+                graph[r] = ([],int(l))
+            elif l.count('AND') or l.count('OR'):
+                a,_,b = l.split()
+                graph[r] = ([f'{a}{r}',f'{b}{r}'],l)
+            elif l.count('SHIFT'):
+                a,_,__ = l.split()
+                graph[r] = ([f'{a}{r}'],l)
+            else:
+                _,a = l.split()
+                graph[r] = ([f'{a}{r}'],l)
+
+    def topo_sort(graph):
+        def get_incoming_edge_count(edgelist, vertex):
+            edge_count = 0
+            for e in edgelist:
+                if e[1] == vertex:
+                    edge_count += 1
+            return edge_count
+        result_list = []
+        no_incoming = []
+        remaining_edges = []
+        for k,v in graph.items():
+            if v[0] == []:
+                no_incoming.append(k)
+            else:
+                remaining_edges += v[0]
+        while no_incoming:
+            current_v = no_incoming.pop
+            outgoing_edges = []
+            result_list.append(current_v)
+            for e in remaining_edges:
+                if e[0] == current_v:
+                    outgoing_edges.append(e)
+                    remaining_edges.remove(e)
+            for e in outgoing_edges:
+                in_count = get_incoming_edge_count(remaining_edges, e[1])
+                if in_count == 0:
+                    no_incoming.append(e[1])
+        return result_list
+    
+    print(topo_sort(graph=graph))
