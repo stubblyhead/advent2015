@@ -1,21 +1,24 @@
 if __name__ == '__main__':
-    with open('testcase') as f:
+    with open('input') as f:
         instructions = f.readlines()
-        graph = {}
-        adj_list = []
-        for i in instructions:
-            l,r = i.strip().split(' -> ')
-            if l.isnumeric():
-                graph[r] = ([],int(l))
-            elif l.count('AND') or l.count('OR'):
-                a,_,b = l.split()
-                graph[r] = ([f'{a}{r}',f'{b}{r}'],l)
-            elif l.count('SHIFT'):
-                a,_,__ = l.split()
-                graph[r] = ([f'{a}{r}'],l)
-            else:
-                _,a = l.split()
-                graph[r] = ([f'{a}{r}'],l)
+    graph = {}
+    adj_list = []
+    for i in instructions:
+        l,r = i.strip().split(' -> ')
+        if l.isnumeric():
+            graph[r] = ([],int(l))
+        elif l.count('AND') or l.count('OR'):
+            a,_,b = l.split()
+            graph[r] = ([[a,r],[b,r]],l)
+        elif l.count('SHIFT'):
+            a,_,__ = l.split()
+            graph[r] = ([[a,r]],l)
+        elif l.count('NOT'):
+            _,a = l.split()
+            graph[r] = ([[a,r]],l)
+        else:
+            graph[r] = ([[l,r]],l)
+    # print(graph)
 
     def topo_sort(graph):
         def get_incoming_edge_count(edgelist, vertex):
@@ -33,13 +36,18 @@ if __name__ == '__main__':
             else:
                 remaining_edges += v[0]
         while no_incoming:
-            current_v = no_incoming.pop
+            # print(f'no_incoming: {no_incoming}')
+            # print(f'remaining_edges: {remaining_edges}')
+            current_v = no_incoming.pop(0)
             outgoing_edges = []
             result_list.append(current_v)
+            edges_to_remove = []
             for e in remaining_edges:
                 if e[0] == current_v:
                     outgoing_edges.append(e)
-                    remaining_edges.remove(e)
+                    edges_to_remove.append(e)
+            for e in edges_to_remove:
+                remaining_edges.remove(e)
             for e in outgoing_edges:
                 in_count = get_incoming_edge_count(remaining_edges, e[1])
                 if in_count == 0:
