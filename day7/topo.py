@@ -9,7 +9,10 @@ if __name__ == '__main__':
             graph[r] = ([],int(l))
         elif l.count('AND') or l.count('OR'):
             a,_,b = l.split()
-            graph[r] = ([[a,r],[b,r]],l)
+            if a.isnumeric():
+                graph[r] = ([[b,r]],l)
+            else:
+                graph[r] = ([[a,r],[b,r]],l)
         elif l.count('SHIFT'):
             a,_,__ = l.split()
             graph[r] = ([[a,r]],l)
