@@ -21,7 +21,6 @@ if __name__ == '__main__':
             graph[r] = ([[a,r]],l)
         else:
             graph[r] = ([[l,r]],l)
-    # print(graph)
 
     def topo_sort(graph):
         def get_incoming_edge_count(edgelist, vertex):
@@ -39,8 +38,6 @@ if __name__ == '__main__':
             else:
                 remaining_edges += v[0]
         while no_incoming:
-            # print(f'no_incoming: {no_incoming}')
-            # print(f'remaining_edges: {remaining_edges}')
             current_v = no_incoming.pop(0)
             outgoing_edges = []
             result_list.append(current_v)
@@ -57,4 +54,4 @@ if __name__ == '__main__':
                     no_incoming.append(e[1])
         return result_list
     
-    print(topo_sort(graph=graph))
+    
