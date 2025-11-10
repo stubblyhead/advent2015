@@ -1,6 +1,6 @@
 class Light:
     def __init__(self, lighted):
-        self.lighted = lighted
+        self.lighted = int(lighted)
         self.toggle = False
     
     def __repr__(self):
@@ -13,15 +13,17 @@ class Light:
 
 class Grid:
     def __init__(self, grid):
-        self.grid = g
+        self.grid = grid
 
-    def count_neighbors(grid, row, col):
+    def count_neighbors(self, row, col):
         count = 0
-        for r in range(max([0,row-1]),min([len(g)-1,row+1])):
-            for c in range(max([0,col-1]),min([len(g[row])-1,col+1])):
+        for r in range(max([0,row-1]),min([len(self.grid)-1,row+1])+1):
+            for c in range(max([0,col-1]),min([len(self.grid[row])-1,col+1])+1
+                           ):
                 if (r,c) == (row,col):
                     continue
-                count += g[r][c].lighted
+                count += self.grid[r][c].lighted
+        return count
             
 
 if __name__ == '__main__':
@@ -29,11 +31,12 @@ if __name__ == '__main__':
         lines = f.readlines()
 
     grid = []
+    tr_table = str.maketrans('.#','01')
     for l in lines:
-        tr_table = str.maketrans('.#','01')
         l = l.translate(tr_table).strip()
 
         grid.append(list(map(Light,l)))
 
-    for g in grid:
-        print(g)
+    grid = Grid(grid)
+
+    print(grid.count_neighbors(10,10))
