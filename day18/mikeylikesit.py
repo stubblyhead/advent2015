@@ -4,9 +4,12 @@ class Light:
         self.toggle = False
     
     def __repr__(self):
-        return str(int(self.lighted))
+        if self.lighted:
+            return '#'
+        else:
+            return '.'
 
-    def toggle(self):
+    def do_toggle(self):
         if self.toggle:
             self.lighted = not self.lighted
             self.toggle = False
@@ -24,6 +27,20 @@ class Grid:
                     continue
                 count += self.grid[r][c].lighted
         return count
+
+    def toggle_all(self):
+        for r in range(len(self.grid)):
+            for c in range(len(self.grid[r])):
+                self.grid[r][c].do_toggle()
+
+    def __repr__(self):
+        out_str = ''
+        for r in self.grid:
+            for l in r:
+                out_str += l.__repr__()
+            out_str += '\n'
+        return out_str
+
             
 
 if __name__ == '__main__':
@@ -38,5 +55,22 @@ if __name__ == '__main__':
         grid.append(list(map(Light,l)))
 
     grid = Grid(grid)
+    print(grid)
+    for _ in range(100
+                   ):
+        for r in range(len(grid.grid)):
+            for c in range(len(grid.grid[r])):
+                neighbors = grid.count_neighbors(r,c)
+                if grid.grid[r][c].lighted and neighbors not in [2,3]:
+                    grid.grid[r][c].toggle = True
+                elif not grid.grid[r][c].lighted and neighbors == 3:
+                    grid.grid[r][c].toggle = True
+        grid.toggle_all()
 
-    print(grid.count_neighbors(10,10))
+
+    on_lights = 0
+    for r in grid.grid:
+        for l in r:
+            on_lights += l.lighted
+
+    print(on_lights)
