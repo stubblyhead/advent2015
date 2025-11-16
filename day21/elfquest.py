@@ -91,6 +91,26 @@ if __name__ == '__main__':
                 if fight(player,boss) == 'player':
                     min_cost = min([min_cost, this_cost])
     print(min_cost)
-                
 
-    
+    max_cost = 0         
+    for w in weapons.values():
+        for a in armor.values():
+            for r in rings.values():
+                boss = Character(boss_hp, boss_dmg, boss_ac)
+                this_cost = w.cost + a.cost + r.cost
+                player = Character(100,0,0)
+                for x in [w,a,r]:
+                    player.get_item(x)
+                if fight(player, boss) == 'boss':
+                    max_cost = max([max_cost, this_cost])
+            for c in combinations(rings.values(),2):
+                boss = Character(boss_hp, boss_dmg, boss_ac)
+                this_cost = w.cost + a.cost
+                player = Character(100,0,0)
+                for r in c:
+                    this_cost += r.cost
+                for x in [w,a]+list(c):
+                    player.get_item(x)
+                if fight(player,boss) == 'boss':
+                    max_cost = max([max_cost, this_cost])
+    print(max_cost)
