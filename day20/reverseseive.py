@@ -10,11 +10,7 @@ def get_factors(num):
 
 
 if __name__ == '__main__':
-    # HCN = [1, 2, 4, 6, 12, 24, 36, 48, 60, 120, 180, 240, 360, \
-    #        720, 840, 1260, 1680, 2520, 5040, 7560, 10080, 15120, \
-    #        20160, 25200, 27720, 45360, 50400, 55440, 83160, 110880, \
-    #        166320, 221760, 277200, 332640, 498960, 554400, 665280, \
-    #        720720, 1081080, 1441440, 2162160]
+
     
     target = 34_000_000
 
@@ -22,9 +18,10 @@ if __name__ == '__main__':
     # lowest number with product of unique prime factors less than 
     # 34000000 / 10 = 3400000 = 3.4 million
 
-    numbers = list(range(720720,1081080))
     
-    for n in numbers:
+    for n in range(1,int(3_400_000/2)):
         if sum(get_factors(n))*10 >= target:
             print(n)
             break
+        # if n % 10000 == 0:
+        #     print(n)
