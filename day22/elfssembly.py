@@ -60,7 +60,7 @@ class Computer:
                 self.tpl(instr[1])
                 self.pointer += 1
             elif instr[0] == 'inc':
-                self.tpl(instr[1])
+                self.inc(instr[1])
                 self.pointer += 1
             elif instr[0] == 'jmp':
                 self.jmp(int(instr[1]))
@@ -69,4 +69,11 @@ class Computer:
             elif instr[0] == 'jio':
                 self.jio(instr[1][0],int(instr[2]))
 
-                
+
+if __name__ == '__main__':
+    with open('input') as f:
+        lines = f.readlines()
+    elfputer = Computer(lines)
+
+    elfputer.run()
+    print(elfputer.reg_b)
