@@ -40,18 +40,23 @@ class Computer:
                 self.pointer += offset
             elif r == 'b' and self.reg_b % 2 == 0:
                 self.pointer += offset
+            else:
+                self.pointer += 1
 
     def jio(self, r, offset):
         if r not in ['a','b']:
             raise ValueError(f"r must be either a or b; received {r}")
         else:
-            if r == 'a' and self.reg_a % 2 == 1:
+            if r == 'a' and self.reg_a == 1:
                 self.pointer += offset
-            elif r == 'b' and self.reg_b % 2 == 1:
+            elif r == 'b' and self.reg_b == 1:
                 self.pointer += offset
+            else:
+                self.pointer += 1
 
     def run(self):
         while self.pointer < len(self.instructions):
+            print(self.pointer+1)
             instr = self.instructions[self.pointer].split()
             if instr[0] == 'hlf':
                 self.hlf(instr[1])
